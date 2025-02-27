@@ -10,7 +10,6 @@ import java.util.concurrent.TimeoutException;
  * @version 1.0
  * @Github https://github.com/fearlesslyh
  */
-@SuppressWarnings("unchecked")
 public class FanoutConsumer {
     private static final String FANOUT_EXCHANGE_NAME = "fanout_exchange";
     public static void main(String[] args) throws IOException, TimeoutException {
