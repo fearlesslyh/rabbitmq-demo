@@ -18,8 +18,10 @@ public class TopicConsumer {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost("localhost");
 
-        Connection connection = connectionFactory.newConnection();
-        Channel channel = connection.createChannel();
+        Channel channel;
+        try (Connection connection = connectionFactory.newConnection()) {
+            channel = connection.createChannel();
+        }
         //声明Topic类型的交换机和队列
         channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.TOPIC);
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);

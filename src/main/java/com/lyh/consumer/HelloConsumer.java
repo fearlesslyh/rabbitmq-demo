@@ -19,8 +19,10 @@ public class HelloConsumer {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
 
-        Connection connection = factory.newConnection();
-        Channel channel = connection.createChannel();
+        Channel channel;
+        try (Connection connection = factory.newConnection()) {
+            channel = connection.createChannel();
+        }
         // 声明队列（确保与生产者一致）
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 

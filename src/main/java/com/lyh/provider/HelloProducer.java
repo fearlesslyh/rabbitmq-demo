@@ -16,14 +16,15 @@ public class HelloProducer {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
 
-        try (Connection connection = factory.newConnection();
-             Channel channel = connection.createChannel()) {
-            // 声明队列（如果不存在则创建）
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-            // 发送消息
-            String message = "Hello RabbitMQ!";
-            channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-            System.out.println("发送消息: " + message);
+        try (Connection connection = factory.newConnection()) {
+            try (Channel channel = connection.createChannel()) {
+                // 声明队列（如果不存在则创建）
+                channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+                // 发送消息
+                String message = "Hello RabbitMQ!";
+                channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+                System.out.println("发送消息: " + message);
+            }
         }
     }
 }

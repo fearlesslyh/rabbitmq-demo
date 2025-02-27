@@ -16,8 +16,10 @@ public class FanoutConsumer {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost("localhost");
 
-        Connection connection = connectionFactory.newConnection();
-        Channel channel = connection.createChannel();
+        Channel channel;
+        try (Connection connection = connectionFactory.newConnection()) {
+            channel = connection.createChannel();
+        }
 
         //声明交换机
         channel.exchangeDeclare(FANOUT_EXCHANGE_NAME, BuiltinExchangeType.FANOUT);

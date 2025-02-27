@@ -17,8 +17,10 @@ public class DirectConsumer {
     public static void main(String[] args) throws IOException, TimeoutException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost("localhost");
-        Connection connection = connectionFactory.newConnection();
-        Channel channel = connection.createChannel();
+        Channel channel;
+        try (Connection connection = connectionFactory.newConnection()) {
+            channel = connection.createChannel();
+        }
         // 声明 Direct 交换机和队列
         channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
