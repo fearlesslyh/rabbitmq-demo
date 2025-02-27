@@ -13,7 +13,7 @@ import java.util.Date;
  * @Github https://github.com/fearlesslyh
  */
 public class FanoutProducer {
-    public static final String EXCHANGE_NAME = "fanout_exchange";
+    private static final String EXCHANGE_NAME = "fanout_exchange";
 
     public static void main(String[] args) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
