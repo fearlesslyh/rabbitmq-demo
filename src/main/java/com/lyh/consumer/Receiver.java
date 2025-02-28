@@ -12,7 +12,7 @@ import java.util.concurrent.TimeoutException;
  * @Github https://github.com/fearlesslyh
  */
 public class Receiver {
-    private final static String Exchange_Name="logs";
+    private final static String Exchange_Name = "logs";
 
     public static void main(String[] args) throws IOException, TimeoutException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
@@ -25,11 +25,12 @@ public class Receiver {
         channel.queueBind(queueName, Exchange_Name, "");
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
-        DeliverCallback deliverCallback =(tag, delivery)->{
+        DeliverCallback deliverCallback = (tag, delivery) -> {
             String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
             System.out.println(" [x] Received '" + message + "'");
         };
 
-        channel.basicConsume(queueName, true, deliverCallback, tag->{});
+        channel.basicConsume(queueName, true, deliverCallback, tag -> {
+        });
     }
 }
