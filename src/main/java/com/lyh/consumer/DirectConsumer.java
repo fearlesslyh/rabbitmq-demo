@@ -19,7 +19,7 @@ public class DirectConsumer {
         connectionFactory.setHost("localhost");
         Channel channel;
         Connection connection = connectionFactory.newConnection();
-            channel = connection.createChannel();
+        channel = connection.createChannel();
 
         // 声明 Direct 交换机和队列
         channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.DIRECT);

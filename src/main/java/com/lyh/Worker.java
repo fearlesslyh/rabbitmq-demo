@@ -1,5 +1,7 @@
 package com.lyh;
 
+import com.rabbitmq.client.ConnectionFactory;
+
 /**
  * @author 梁懿豪
  * @version 1.0
@@ -7,7 +9,9 @@ package com.lyh;
  */
 public class Worker {
     private final static String TASK_QUEUE_NAME = "task_queue";
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.setHost("localhost");
     }
 }
