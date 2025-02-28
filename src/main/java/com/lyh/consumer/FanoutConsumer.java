@@ -12,14 +12,15 @@ import java.util.concurrent.TimeoutException;
  */
 public class FanoutConsumer {
     private static final String FANOUT_EXCHANGE_NAME = "fanout_exchange";
+
     public static void main(String[] args) throws IOException, TimeoutException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost("localhost");
 
         Channel channel;
-        try (Connection connection = connectionFactory.newConnection()) {
-            channel = connection.createChannel();
-        }
+        Connection connection = connectionFactory.newConnection();
+        channel = connection.createChannel();
+
 
         //声明交换机
         channel.exchangeDeclare(FANOUT_EXCHANGE_NAME, BuiltinExchangeType.FANOUT);
@@ -29,16 +30,20 @@ public class FanoutConsumer {
         channel.queueBind(queue1, FANOUT_EXCHANGE_NAME, "");
         channel.queueBind(queue2, FANOUT_EXCHANGE_NAME, "");
 
-        DeliverCallback callback=(tag,delivery)->{
-            System.out.println("消费者1收到： "+new String(delivery.getBody()));
+        DeliverCallback callback = (tag, delivery) -> {
+            System.out.println("消费者1收到： " + new String(delivery.getBody()));
         };
-        channel.basicConsume(queue1,true,callback,tag->{});
+        channel.basicConsume(queue1, true, callback, tag -> {
+        });
 
-        DeliverCallback callback2=(tag,delivery)->{
-            System.out.println("消费者2收到： "+new String(delivery.getBody()));
+        DeliverCallback callback2 = (tag, delivery) -> {
+            System.out.println("消费者2收到： " + new String(delivery.getBody()));
         };
-        channel.basicConsume(queue2,true,callback2,tag->{});
+        channel.basicConsume(queue2, true, callback2, tag -> {
+        });
 
         System.out.println("等待接受广播消息......");
-    };
+    }
+
+    ;
 }

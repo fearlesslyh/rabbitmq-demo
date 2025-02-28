@@ -19,9 +19,9 @@ public class TopicConsumer {
         connectionFactory.setHost("localhost");
 
         Channel channel;
-        try (Connection connection = connectionFactory.newConnection()) {
+        Connection connection = connectionFactory.newConnection();
             channel = connection.createChannel();
-        }
+
         //声明Topic类型的交换机和队列
         channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.TOPIC);
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
@@ -33,5 +33,6 @@ public class TopicConsumer {
         };
         channel.basicConsume(QUEUE_NAME,true,callback,consumerTag->{});
         System.out.println("等待接受订单事件......");
+
     }
 }
