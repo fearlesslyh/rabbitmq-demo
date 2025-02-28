@@ -60,6 +60,4 @@ public class FanoutConsumer {
         // 打印等待接受广播消息
         System.out.println("等待接受广播消息......");
     }
-
-    ;
 }
