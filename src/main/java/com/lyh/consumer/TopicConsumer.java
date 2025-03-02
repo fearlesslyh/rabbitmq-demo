@@ -20,18 +20,19 @@ public class TopicConsumer {
 
         Channel channel;
         Connection connection = connectionFactory.newConnection();
-            channel = connection.createChannel();
+        channel = connection.createChannel();
 
         //声明Topic类型的交换机和队列
         channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.TOPIC);
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
         //绑定通配符（匹配所有以order.开头的事件）
-        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME,"order.*");
+        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "order.*");
 
-        DeliverCallback callback=(tag,delivery)->{
-            System.out.println("收到订单事件： "+new String(delivery.getBody()));
+        DeliverCallback callback = (tag, delivery) -> {
+            System.out.println("收到订单事件： " + new String(delivery.getBody()));
         };
-        channel.basicConsume(QUEUE_NAME,true,callback,consumerTag->{});
+        channel.basicConsume(QUEUE_NAME, true, callback, consumerTag -> {
+        });
         System.out.println("等待接受订单事件......");
 
     }
