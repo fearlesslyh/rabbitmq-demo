@@ -28,7 +28,6 @@ public class RPCServer {
         channel.basicQos(1); // 每次处理一条消息
 
         System.out.println("等待 RPC 请求...");
-
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             AMQP.BasicProperties replyProps = new AMQP.BasicProperties.Builder()
                     .correlationId(delivery.getProperties().getCorrelationId())
